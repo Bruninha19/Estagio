@@ -29,8 +29,8 @@ export default {
   data() {
     return {
       form: {
-        full_name: '',
-        educational_email: '',
+        name: '',
+        email: '',
         password: '',
         password_confirmation: '',
       },
@@ -50,10 +50,11 @@ export default {
       }
 
       try {
+
         // Aqui você enviará os dados para uma API Laravel
         // Exemplo usando axios (certifique-se de que axios está no app.js/bootstrap.js)
-        const response = await axios.post('/api/criarConta', this.form);
-
+        const response = await axios.post('http://127.0.0.1:8000/cadastrar', this.form);
+        alert('Conta criada com sucesso!')
         this.message = 'Conta criada com sucesso!';
         // Limpar formulário ou redirecionar
         this.form = {
@@ -63,9 +64,9 @@ export default {
           password_confirmation: '',
         };
         console.log(response.data);
-        // Redirecionar para uma página de sucesso, login, etc.
-        // this.$router.push('/login'); // Se estiver usando Vue Router
       } catch (error) {
+        alert('Erro ao cadastrar usuário')
+        alert(error);
         if (error.response && error.response.status === 422) {
           // Erros de validação do Laravel
           this.errors = error.response.data.errors;
