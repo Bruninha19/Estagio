@@ -1,4 +1,5 @@
 <template>
+  <div class="container">
   <form @submit.prevent="register" class="register-form">
     <div class="form-group">
       <label for="fullName">Nome completo</label>
@@ -22,12 +23,33 @@
 
     <button type="submit" class="btn-register">CADASTRAR</button>
   </form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="usuario in usuarios" :key="usuario.id">
+      <td>{{ usuario.name }}</td>
+      <td>{{ usuario.email }}</td>
+      <td>
+        <button @click="deletar(usuario.id)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
+      usuarios: [],
       form: {
         name: '',
         email: '',
@@ -63,6 +85,7 @@ export default {
           password: '',
           password_confirmation: '',
         };
+        this.fetchUsuarios();
         console.log(response.data);
       } catch (error) {
         alert('Erro ao cadastrar usuário')
@@ -76,13 +99,47 @@ export default {
           console.error(error);
         }
       }
+    },
+
+      async deletar(id) {
+      if (confirm('Tem certeza que deseja excluir este usuário?')) {
+      try {
+        await axios.delete(`http://127.0.0.1:8000/usuarios/${id}`);
+        this.fetchUsuarios(); // Atualiza a lista
+        alert('Usuário excluído com sucesso!');
+      } catch (error) {
+        console.error('Erro ao excluir usuário:', error);
+        alert('Erro ao excluir usuário.');
+      }
     }
+  },
+    
+    async fetchUsuarios() {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/usuarios');
+        this.usuarios = response.data;
+      } catch (error) {
+        console.error('Erro ao buscar usuários:', error);
+      }
+    }
+  },
+  
+
+  mounted() {
+    this.fetchUsuarios();
   }
 };
 </script>
 
 
 <style scoped>
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 40px;
+}
 .register-form {
   margin-left: 40px;
   display: grid;
@@ -129,5 +186,56 @@ export default {
 }
 .btn-register:hover {
   background-color: #0056b3;
+}
+table {
+  width: 90%;
+  margin: 40px auto;
+  border-collapse: collapse;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #1E88DA;
+  color: white;
+}
+
+thead th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 16px;
+}
+
+tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+table button {
+  margin-right: 6px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+table button:hover {
+  opacity: 0.85;
+}
+
+
+
+table button:nth-child(1) {
+  background-color: #E53935; /* vermelho para excluir */
+  color: black;
 }
 </style>

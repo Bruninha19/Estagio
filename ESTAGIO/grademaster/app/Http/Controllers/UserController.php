@@ -27,4 +27,25 @@ class UserController extends Controller
     ], 201);
 
     }
+
+    public function listarUsuarios()
+    {
+        $usuarios = User::all();
+        return response()->json($usuarios);
+    }
+
+    
+
+public function deletarUsuario($id)
+{
+    $usuario = User::find($id);
+
+    if (!$usuario) {
+        return response()->json(['mensagem' => 'Usuário não encontrado'], 404);
+    }
+
+    $usuario->delete();
+
+    return response()->json(['mensagem' => 'Usuário excluído com sucesso']);
+}
 }

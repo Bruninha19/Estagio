@@ -12,3 +12,7 @@ Route::get('/criarConta', function () {
 });
 
 Route::post('/cadastrar', [UserController::class, 'criarUsuario']) -> name('cadastrar');
+
+Route::get('/usuarios', [UserController::class, 'listarUsuarios']);
+
+Route::delete('/usuarios/{id}', [UserController::class, 'deletarUsuario']);
