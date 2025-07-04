@@ -2,12 +2,12 @@
   <form @submit.prevent="register" class="register-form">
     <div class="form-group">
       <label for="fullName">Nome completo</label>
-      <input type="text" id="fullName" v-model="form.full_name" required>
+      <input type="text" id="fullName" v-model="form.name" required>
     </div>
 
     <div class="form-group">
       <label for="educationalEmail">E-mail educacional</label>
-      <input type="email" id="educationalEmail" v-model="form.educational_email" required>
+      <input type="email" id="educationalEmail" v-model="form.email" required>
     </div>
 
     <div class="form-group">
@@ -58,8 +58,8 @@ export default {
         this.message = 'Conta criada com sucesso!';
         // Limpar formulário ou redirecionar
         this.form = {
-          full_name: '',
-          educational_email: '',
+          name: '',
+          email: '',
           password: '',
           password_confirmation: '',
         };
