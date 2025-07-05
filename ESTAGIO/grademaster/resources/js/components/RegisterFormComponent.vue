@@ -141,10 +141,10 @@ export default {
   padding: 40px;
 }
 .register-form {
-  margin-left: 40px;
+  margin-left: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 30px;
   background-color: #ffffff;
 }
 .form-group {

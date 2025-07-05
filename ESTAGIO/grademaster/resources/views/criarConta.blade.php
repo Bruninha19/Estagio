@@ -26,7 +26,7 @@
         
         }
         .logo {
-            margin-top: -70px;
+            margin-top: -90px;
             display: flex;
             gap: 10px;
         }
@@ -39,7 +39,7 @@
             font-size: 2em;
             margin-bottom: 30px;
             font-weight: bold;
-            margin-left: 40px;
+            margin-left: 60px;
             
             
         }
